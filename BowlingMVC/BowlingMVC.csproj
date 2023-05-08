@@ -6,4 +6,21 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Content Remove="Views\BookingViewModel.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="Views\BookingViewModel.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Data.SqlClient" Version="5.1.1" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="7.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\ShModels\ShModel\ShModel.csproj" />
+  </ItemGroup>
+
 </Project>
