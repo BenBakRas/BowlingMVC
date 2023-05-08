@@ -1,10 +1,10 @@
-﻿using DataAccessDTO.Interfaces;
-using DataAccessDTO.DTO;
+﻿using DataAccess.Interfaces;
+using DataAccess.DTO;
 using Microsoft.Data.SqlClient;
 using System;
 using System.Collections.Generic;
 
-namespace BowlingMVC.DataAccess
+namespace DataAccess
 {
     public class DataAccessPrice : ICrudService<PriceDTO>
     {
@@ -118,13 +118,12 @@ namespace BowlingMVC.DataAccess
 
             try
             {
-                priceDto = new()
-                {
-                    Id = reader.GetInt32(reader.GetOrdinal("Id")),
-                    NormalPrice = reader.GetDecimal(reader.GetOrdinal("NormalPrice")),
-                    SpecialPrice = reader.GetDecimal(reader.GetOrdinal("SpecialPrice")),
-                    Weekday = reader.GetString(reader.GetOrdinal("Weekday"))
-                };
+                priceDto = new PriceDTO(
+                    reader.GetInt32(reader.GetOrdinal("Id")),
+                    reader.GetDouble(reader.GetOrdinal("NormalPrice")),
+                    reader.GetDouble(reader.GetOrdinal("SpecialPrice")),
+                    reader.GetString(reader.GetOrdinal("Weekday"))
+                );
             }
             catch (Exception)
             {

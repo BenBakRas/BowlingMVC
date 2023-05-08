@@ -1,18 +1,19 @@
-﻿using DataAccessDTO.DTO;
+﻿using DataAccess.DTO;
 using Microsoft.Data.SqlClient;
-using DataAccessDTO.Interfaces;
+using DataAccess.Interfaces;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 using ShModel;
+using System.Numerics;
 
-namespace DataAccessDTO
+namespace DataAccess
 {
     public class DataAccessBooking : ICrudService<BookingDTO>
     {
         private SqlConnectionStringBuilder conStr;
-        private ICrudService<CustomersDTO> _iCustomer;
+        private ICrudService<CustomerDTO> _iCustomer;
         private ICrudService<PriceDTO> _iPrice;
-
+        private ICrudService<LaneDTO> _iLane;
         public DataAccessBooking()
         {
             conStr = DbConnection.GetConnectionStringBuilder();
@@ -136,39 +137,42 @@ namespace DataAccessDTO
 
             CustomerDTO customerDTO = _iCustomer.GetById(customerId);
 
-            BookingDTO bookingDto = new BookingDTO
-            {
-                Id = id,
-                HoursToPlay = TimeSpan.FromHours(hoursToPlay),
-                StartDateTime = startDateTime,
-                NoOfPlayers = noOfPlayers,
-                Customer = new Customer
-                {
-                    FirstName = customerDTO.FirstName,
-                    LastName = customerDTO.LastName,
-                    Email = customerDTO.Email,
-                    Phone = customerDTO.Phone
-                }
-            };
+            // Create a new Customer object
+            Customer customer = new Customer(customerDTO.Id, customerDTO.FirstName, customerDTO.LastName, customerDTO.Email, customerDTO.Phone);
+
+            // TODO: Retrieve the Lane and Price objects or create them
+            // Assuming that you have DataAccessLane and DataAccessPrice classes and their respective GetById methods,
+            // you can retrieve the LaneDTO and PriceDTO objects like this:
+
+            int laneId = reader.GetInt32(reader.GetOrdinal("LaneID"));
+            LaneDTO laneDTO = _iLane.GetById(laneId);
+            int priceId = reader.GetInt32(reader.GetOrdinal("PriceID"));
+            PriceDTO priceDTO = _iPrice.GetById(priceId);
+
+            // Create Lane and Price objects using the retrieved LaneDTO and PriceDTO
+            Lane lane = new Lane(laneDTO.Id, laneDTO.LaneNumber);
+            Price price = new Price(priceDTO.Id, priceDTO.NormalPrice, priceDTO.SpecialPrice, priceDTO.Weekday);
+
+            // Create a new BookingDTO using the constructor
+            BookingDTO bookingDto = new BookingDTO(id, startDateTime, TimeSpan.FromHours(hoursToPlay), noOfPlayers, customer, lane, price);
 
             return bookingDto;
         }
-    }
 
-    /*public List<BookingDTO> GetBookingsForDate(DateTime date)
-    {
-        using (SqlConnection connection = DbConnection.GetConnection())
+        /*public List<BookingDTO> GetBookingsForDate(DateTime date)
         {
-            connection.Open();
-
-            using (SqlCommand cmd = new SqlCommand("SELECT * FROM Booking WHERE CAST(StartDateTime AS DATE) = @Date", connection))
+            using (SqlConnection connection = DbConnection.GetConnection())
             {
-                cmd.Parameters.AddWithValue("@Date", date.Date);
+                connection.Open();
 
-                SqlDataReader reader = cmd.ExecuteReader();
-                return BuildDtoObjects(reader).ToList();*/
-            }
-        
+                using (SqlCommand cmd = new SqlCommand("SELECT * FROM Booking WHERE CAST(StartDateTime AS DATE) = @Date", connection))
+                {
+                    cmd.Parameters.AddWithValue("@Date", date.Date);
+
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    return BuildDtoObjects(reader).ToList();*/
+    }
+}        
     
 
     

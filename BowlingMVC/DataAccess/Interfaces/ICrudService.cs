@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataAccessDTO.Interfaces
+namespace DataAccess.Interfaces
 
     {
         public interface ICrudService<TDto> where TDto : class

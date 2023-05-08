@@ -4,15 +4,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataAccessDTO.DTO
+namespace DataAccess.DTO
 {
     public class PriceDTO
     {
         public int Id { get; set; }
-        public decimal NormalPrice { get; set; }
-        public decimal SpecialPrice { get; set; }
-        public int Hour { get; set; }
-        public string? Weekday { get; set; }
-
+        public double NormalPrice { get; set; }
+        public double SpecialPrice { get; set; } // Fixed typo
+        public string Weekday { get; set; }
+        public PriceDTO(int inId, double inNormalPrice, double inSpecialPrice, string inWeekday)
+        {
+            Id = inId;
+            NormalPrice = inNormalPrice;
+            SpecialPrice = inSpecialPrice; // Fixed typo
+            Weekday = inWeekday;
+        }
     }
 }

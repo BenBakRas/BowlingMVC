@@ -1,10 +1,10 @@
-﻿using DataAccessDTO.Interfaces;
-using DataAccessDTO.DTO;
+﻿using DataAccess.Interfaces;
+using DataAccess.DTO;
 using Microsoft.Data.SqlClient;
 using System;
 using System.Collections.Generic;
 
-namespace DataAccessDTO
+namespace DataAccess
 {
     public class DataAccessLane : ICrudService<LaneDTO>
     {
@@ -57,11 +57,10 @@ namespace DataAccessDTO
 
             while (reader.Read())
             {
-                LaneDTO laneDto = new LaneDTO()
-                {
-                    Id = reader.GetInt32(reader.GetOrdinal("Id")),
-                    LaneNumber = reader.GetInt32(reader.GetOrdinal("LaneNumber"))
-                };
+                LaneDTO laneDto = new LaneDTO(
+                    reader.GetInt32(reader.GetOrdinal("Id")),
+                    reader.GetInt32(reader.GetOrdinal("LaneNumber"))
+                );
                 list.Add(laneDto);
             }
             con.Close();
@@ -81,11 +80,10 @@ namespace DataAccessDTO
 
             if (reader.Read())
             {
-                laneDto = new LaneDTO()
-                {
-                    Id = reader.GetInt32(reader.GetOrdinal("Id")),
-                    LaneNumber = reader.GetInt32(reader.GetOrdinal("LaneNumber"))
-                };
+                laneDto = new LaneDTO(
+                    reader.GetInt32(reader.GetOrdinal("Id")),
+                    reader.GetInt32(reader.GetOrdinal("LaneNumber"))
+                );
             }
             con.Close();
             return laneDto;

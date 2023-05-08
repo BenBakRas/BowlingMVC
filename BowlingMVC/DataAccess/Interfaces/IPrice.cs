@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using DataAccessDTO.DTO;
+using DataAccess.DTO;
 
-namespace DataAccessDTO.Interfaces
+namespace DataAccess.Interfaces
 {
      public interface IPrice: ICrudService<PriceDTO>
     {

@@ -1,11 +1,11 @@
-﻿using DataAccessDTO.Interfaces;
-using DataAccessDTO.DTO;
+﻿using DataAccess.Interfaces;
+using DataAccess.DTO;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 
-namespace DataAccessDTO
+namespace DataAccess
 {
     public class DataAccessCustomer : ICrudService<CustomerDTO>
     {
@@ -63,14 +63,13 @@ namespace DataAccessDTO
 
                 if (reader.Read())
                 {
-                    customer = new CustomerDTO
-                    {
-                        Id = reader.GetInt32(reader.GetOrdinal("Id")),
-                        FirstName = reader.GetString(reader.GetOrdinal("FirstName")),
-                        LastName = reader.GetString(reader.GetOrdinal("LastName")),
-                        Email = reader.GetString(reader.GetOrdinal("Email")),
-                        Phone = reader.GetString(reader.GetOrdinal("Phone"))
-                    };
+                    customer = new CustomerDTO(
+                        reader.GetInt32(reader.GetOrdinal("Id")),
+                        reader.GetString(reader.GetOrdinal("FirstName")),
+                        reader.GetString(reader.GetOrdinal("LastName")),
+                        reader.GetString(reader.GetOrdinal("Email")),
+                        reader.GetString(reader.GetOrdinal("Phone"))
+                    );
                 }
             }
             catch (Exception ex)
@@ -99,15 +98,14 @@ namespace DataAccessDTO
 
                 while (reader.Read())
                 {
-                    CustomerDTO customer = new CustomerDTO
-                    {
-                        Id = reader.GetInt32(reader.GetOrdinal("Id")),
-                        FirstName = reader.GetString(reader.GetOrdinal("FirstName")),
-                        LastName = reader.GetString(reader.GetOrdinal("LastName")),
-                        Email = reader.GetString(reader.GetOrdinal("Email")),
-                        Phone = reader.GetString(reader.GetOrdinal("Phone"))
-                    };
-                    customer.Add(customer);
+                    CustomerDTO customer = new CustomerDTO(
+                        reader.GetInt32(reader.GetOrdinal("Id")),
+                        reader.GetString(reader.GetOrdinal("FirstName")),
+                        reader.GetString(reader.GetOrdinal("LastName")),
+                        reader.GetString(reader.GetOrdinal("Email")),
+                        reader.GetString(reader.GetOrdinal("Phone"))
+                    );
+                    customers.Add(customer);
                 }
             }
             catch (Exception ex)
@@ -120,7 +118,7 @@ namespace DataAccessDTO
                 con.Close();
             }
 
-            return customer;
+            return customers;
         }
 
         public bool Update(CustomerDTO customerDto)
