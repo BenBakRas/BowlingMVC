@@ -1,0 +1,40 @@
+﻿@model List<BowlingMVC.Models.Price>
+@{
+    ViewData["Title"] = "Priser";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Prisliste</h1>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Dag
+            </th>
+            <th>
+                Pris inden 18:00
+            </th>
+            <th>
+                Pris efter 18:00
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var price in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => price.Weekday)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => price.NormalPrice)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => price.SpecialPrice)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

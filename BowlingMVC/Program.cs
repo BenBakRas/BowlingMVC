@@ -1,7 +1,13 @@
+using BowlingMVC.Servicelayer;
+using BowlingMVC.Servicelayer.Interfaces;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddScoped<ICustomerService, CustomerService>();
+builder.Services.AddScoped<IPriceService, PriceService>();
+builder.Services.AddScoped<IApiService, ApiService>();
 
 var app = builder.Build();
 

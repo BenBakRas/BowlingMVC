@@ -4,8 +4,11 @@
     {
         public int Id { get; set; }
         public double NormalPrice { get; set; }
-        public double SpeialPrice { get; set; }
-        public String Weekday { get; set; }
-        public Price() { }
+        public double SpecialPrice { get; set; }
+        public string Weekday { get; set; } = string.Empty;
+        public Price() 
+        { 
+        
+        }
     }
 }

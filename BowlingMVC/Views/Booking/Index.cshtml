@@ -1,0 +1,20 @@
+﻿@model BowlingMVC.Models.Booking
+@{
+    ViewData["Title"] = "Book en bane";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Her kan du booke en bane</h1>
+</div>
+
+<div id="date-picker-example" class="md-form md-outline input-with-post-icon datepicker" inline="true">
+    <input placeholder="Select date" type="text" id="example" class="form-control">
+    <label for="example">Try me...</label>
+    <i class="fas fa-calendar input-prefix"></i>
+</div>
+
+<script>
+ $('.datepicker').datepicker({
+  inline: true
+});
+</script>

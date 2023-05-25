@@ -1,0 +1,49 @@
+﻿@model List<BowlingMVC.Models.Customers>
+
+@{
+    ViewData["Title"] = "Kunder";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Liste over kunder</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Firstname
+            </th>
+            <th>
+                Lastname
+            </th>
+            <th>
+                Email
+            </th>
+            <th>
+                Phone
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var customer in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => customer.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => customer.LastName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => customer.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => customer.Phone)
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

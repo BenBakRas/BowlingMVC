@@ -1,0 +1,40 @@
+﻿@model List<BowlingMVC.Models.Lane>
+@{
+    ViewData["Title"] = "Baner";
+}
+
+<h1>List of Lanes</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Lane Id
+            </th>
+            <th>
+                Lane Number
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var lane in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => lane.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => lane.LaneNumber)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@lane.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@lane.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@lane.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

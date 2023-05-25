@@ -6,5 +6,7 @@
         public int LaneNumber { get; set; }
 
         public Lane() { }
+
+        
     }
 }
