@@ -18,19 +18,7 @@ namespace BowlingMVC.Controllers
             return View();
         }
 
-        public IActionResult Price()
-        {
-            return View();
-        }
-
-        public IActionResult Booking()
-        {
-            return View();
-        }
-
-        
-
-        public IActionResult Privacy()
+        public IActionResult Contact()
         {
             return View();
         }

@@ -2,13 +2,10 @@
 
 namespace BowlingMVC.Servicelayer.Interfaces
 {
-    public class IBookingService
+    public interface IBookingService
     {
-        /*
-         * Task<ApiResponse<List<Booking>>> GetBookingerAsync();
-        Task<ApiResponse<Booking>> CreateBookingAsync(Booking booking);
-        Task<ApiResponse<Booking>> UpdateBookingAsync(int id, Booking booking);
-        Task<ApiResponse<bool>> DeleteBookingAsync(int id);
-        */
+        Task<Booking> GetBookingById(int bookingId);
+        Task<int> CreateBooking(Booking booking);
+
     }
 }

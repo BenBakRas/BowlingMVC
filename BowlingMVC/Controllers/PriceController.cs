@@ -17,12 +17,10 @@ namespace BowlingMVC.Controllers
             _priceService = priceService;
 
         }
-
-        public async Task<IActionResult> Index()
+        
+        public async Task<IActionResult> Index([FromServices] IApiService apiService)
         {
-            var apiService = new ApiService();
             var priceService = new PriceService(apiService);
-
             var prices = await priceService.GetAllPrices();
 
             return View(prices);

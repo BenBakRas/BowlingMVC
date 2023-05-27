@@ -7,13 +7,15 @@ namespace BowlingMVC.Servicelayer
     public class ApiService : IApiService
     {
         private readonly HttpClient _httpClient;
-        private readonly string apiUrl = "https://localhost:7197/api/";
+        private readonly string _apiUrl;
 
-        public ApiService()
+        public ApiService(IConfiguration configuration)
         {
+            _apiUrl = configuration["ServiceUrlToUse"];
+
             _httpClient = new HttpClient
             {
-                BaseAddress = new Uri(apiUrl)
+                BaseAddress = new Uri(_apiUrl)
             };
             _httpClient.DefaultRequestHeaders.Accept.Clear();
             _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
@@ -45,7 +47,7 @@ namespace BowlingMVC.Servicelayer
             }
 
             var responseContent = await response.Content.ReadAsStringAsync();
-            
+
             var responseData = JsonConvert.DeserializeObject<T>(responseContent);
 
             return responseData;

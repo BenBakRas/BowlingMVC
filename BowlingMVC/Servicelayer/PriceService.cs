@@ -20,18 +20,6 @@ namespace BowlingMVC.Servicelayer
             return prices;
         }
 
-        public async Task<Price> GetPriceById(int priceId)
-        {
-            var price = await _apiService.GetAsync<Price>($"prices/{priceId}");
-            return null;
-        }
-
-        public async Task<Price> CreatePrice(Price price)
-        {
-            var createdPrice = await _apiService.PostAsync<Price>("prices", price);
-            return createdPrice;
-        }
-
         // Other price-related methods can be added as needed.
     }
 }
