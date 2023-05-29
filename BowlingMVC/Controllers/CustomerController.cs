@@ -50,6 +50,7 @@ namespace BowlingMVC.Controllers
                 if (createdCustomerId >= 0)
                 {
                     // Redirect to the customer details page or any other appropriate action
+                    //BookingController.Create(Booking booking);
                     return RedirectToAction("Index", "Customer");
                 }
                 else

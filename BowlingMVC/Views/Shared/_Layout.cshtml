@@ -58,11 +58,11 @@
     <script>
         $(document).ready(function () {
             // jQuery UI datepicker initialization
-            $("#date").datepicker();
+            $("#datePicker").datepicker();
         });
 
         $(document).ready(function () {
-            $('#bookingTime').timepicker({
+            $('#timePicker').timepicker({
                 showMeridian: false,
                 minuteStep: 60,
                 defaultTime: '12:00',
@@ -74,12 +74,12 @@
             });
 
             // Restrict manual editing of the time input
-            $('#bookingTime').on('keydown paste', function (e) {
+            $('#timePicker').on('keydown paste', function (e) {
                 e.preventDefault();
             });
 
             // Handle time selection changes
-            $('#bookingTime').on('changeTime.timepicker', function (e) {
+            $('#timePicker').on('changeTime.timepicker', function (e) {
                 var selectedHour = e.time.hours;
                 $(this).val(selectedHour + ':00');
             });
