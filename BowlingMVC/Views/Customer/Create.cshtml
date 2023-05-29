@@ -17,32 +17,36 @@
         <br />
         <div class="form-row">
             <div class="form-group col-md-6">
-                <label for="firstName">Fornavn</label>
-                <input type="text" name="firstName" class="form-control" id="firstName" placeholder="Enter your first name" required>
+                <label for="FirstName">Fornavn</label>
+                <input type="text" name="FirstName" class="form-control" id="FirstName" placeholder="Enter your first name" required>
+                <span asp-validation-for="FirstName" class="text-danger"></span>
             </div>
             <div class="form-group col-md-6">
-                <label for="lastName">Efternavn</label>
-                <input type="text" name="lastName" class="form-control" id="lastName" placeholder="Enter your last name" required>
-            </div>
-        </div>
-        <div class="form-row">
-            <div class="form-group col-md-6">
-                <label for="email">Email</label>
-                <input type="email" name="email" class="form-control" id="email" placeholder="Enter your email" required>
-            </div>
-            <div class="form-group col-md-6">
-                <label for="phone">Telefonnummer</label>
-                <input type="tel" name="phone" class="form-control" id="phone" placeholder="Enter your phone number" required>
+                <label for="LastName">Efternavn</label>
+                <input type="text" name="LastName" class="form-control" id="LastName" placeholder="Enter your last name" required>
+                <span asp-validation-for="LastName" class="text-danger"></span>
             </div>
         </div>
         <div class="form-row">
             <div class="form-group col-md-6">
-                <label for="startDateTime">Ønsket dato</label>
-                <input type="text" name="startDateTime" class="form-control" id="datePicker" placeholder="Select a date" required>
+                <label for="Email">Email</label>
+                <input type="email" name="Email" class="form-control" id="Email" placeholder="Enter your email" required>
+                <span asp-validation-for="Email" class="text-danger"></span>
             </div>
             <div class="form-group col-md-6">
-                <label for="noOfPlayers">Antal spillere</label>
-                <select class="form-control" name="noOfPlayers" id="noOfPlayers" required>
+                <label for="Phone">Telefonnummer</label>
+                <input type="tel" name="Phone" class="form-control" id="Phone" placeholder="Enter your phone number" required>
+                <span asp-validation-for="Phone" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="Booking_StartDateTime">Ønsket dato</label>
+                <input type="datetime-local" name="Booking.StartDateTime" class="form-control" id="bookingDateTimeInput" required>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="NoOfPlayers">Antal spillere</label>
+                <select class="form-control" name="Booking.NoOfPlayers" id="NoOfPlayers" required>
                     <option value="">Vælg antal spillere</option>
                     @for (int i = 1; i <= 20; i++)
                     {
@@ -50,12 +54,32 @@
                     }
                 </select>
             </div>
+        </div>
+        <div class="form-row">
             <div class="form-group col-md-6">
-                <label for="startDateTime1">Ønsket tidspunkt</label>
-                <input id="timePicker" name="startDateTime1" type="text" class="form-control" placeholder="Select booking time" readonly>
+                <label for="HoursToPlay">Hvor mange timer vil i spille?</label>
+                <select class="form-control" name="Booking.HoursToPlay" id="HoursToPlay" placeholder="Angiv hvor mange timer du vil spille" required>
+                    <option value="">Vælg antal timer</option>
+                    @for (int i = 1; i <= 10; i++)
+                    {
+                        <option value="@i">@i timer</option>
+                    }
+                </select>
             </div>
         </div>
         <br />
         <button type="submit" class="btn btn-warning">Submit</button>
     </form>
 </div>
+
+<script>
+    // Get the booking date and time input element
+    var bookingDateTimeInput = document.getElementById('bookingDateTimeInput');
+
+    // Set the minutes value to 0
+    bookingDateTimeInput.addEventListener('input', function() {
+        var date = new Date(this.value);
+        date.setMinutes(0);
+        this.value = date.toISOString().slice(0, 16);
+    });
+</script>

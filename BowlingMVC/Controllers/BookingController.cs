@@ -12,8 +12,8 @@ namespace BowlingMVC.Controllers
         public BookingController(IBookingService bookingService)
         {
             _bookingService = bookingService;
-
         }
+
         public IActionResult Index()
         {
             return View();

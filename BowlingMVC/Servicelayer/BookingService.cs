@@ -16,13 +16,13 @@ namespace BowlingMVC.Servicelayer
 
         public async Task<Booking> GetBookingById(int bookingId)
         {
-            var booking = await _apiService.GetAsync<Booking>($"Booking/{bookingId}");
+            var booking = await _apiService.GetAsync<Booking>($"bookings/{bookingId}");
             return null;
         }
 
         public async Task<int> CreateBooking(Booking booking)
         {
-            var createdBooking = await _apiService.PostAsync<int>("booking", booking);
+            var createdBooking = await _apiService.PostAsync<int>("bookings", booking);
             return createdBooking;
         }
 

@@ -9,7 +9,7 @@ using BowlingMVC.Models;
 using Newtonsoft.Json;
 using System.Net.Http.Headers;
 using System.Diagnostics;
-
+using BowlingMVC.Controllers;
 using BowlingMVC.Servicelayer;
 using BowlingMVC.Servicelayer.Interfaces;
 
@@ -18,11 +18,12 @@ namespace BowlingMVC.Controllers
     public class CustomerController : Controller
     {
         private readonly ICustomerService _customerService;
+        private readonly IBookingService _bookingService;
 
-        public CustomerController(ICustomerService customerService)
+        public CustomerController(ICustomerService customerService, IBookingService bookingService)
         {
             _customerService = customerService;
-
+            _bookingService = bookingService;
         }
 
         [HttpGet]
@@ -40,18 +41,29 @@ namespace BowlingMVC.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(Customers customer)
+        public async Task<IActionResult> Create(Customers customer, Booking booking)
         {
             if (ModelState.IsValid)
             {
-                // Call the API to create the customer
-                var createdCustomerId = await _customerService.CreateCustomer(customer);
 
+                var createdCustomerId = await _customerService.CreateCustomer(customer);
                 if (createdCustomerId >= 0)
                 {
-                    // Redirect to the customer details page or any other appropriate action
-                    //BookingController.Create(Booking booking);
-                    return RedirectToAction("Index", "Customer");
+                    // Set the customer ID for the booking
+                    booking.CustomerId = createdCustomerId;
+
+                    // Call the API to create the booking
+                    var createdBookingId = await _bookingService.CreateBooking(booking);
+
+                    if (createdBookingId >= 0)
+                    {
+                        // Redirect to the customer details page or any other appropriate action
+                        return RedirectToAction("Index", "Customer");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("", "Failed to create the booking.");
+                    }
                 }
                 else
                 {
@@ -60,8 +72,10 @@ namespace BowlingMVC.Controllers
             }
 
             // If the ModelState is not valid or the API call fails, return the create view with the validation errors
-            return View(customer);
+            return View(customer); // Pass the customer model to the view to preserve user input
         }
+
+
 
         [HttpGet]
         public IActionResult Details()
