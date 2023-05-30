@@ -2,11 +2,12 @@
 {
     public class Booking
     {
-        //public int Id { get; set; }
+        public int Id { get; set; }
         public DateTime StartDateTime { get; set; }
         public int HoursToPlay { get; set; }
         public int NoOfPlayers { get; set;}
-        public int CustomerId { get; set; }
+        //public int CustomerId { get; set; }
+        public Customers? Customer;
 
 
         public Booking() { }

@@ -27,11 +27,9 @@ namespace BowlingMVC.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            var customers = await _customerService.GetAllCustomers();
-
-            return View(customers);
+            return View();
         }
 
         [HttpGet]
@@ -46,19 +44,28 @@ namespace BowlingMVC.Controllers
             if (ModelState.IsValid)
             {
 
-                var createdCustomerId = await _customerService.CreateCustomer(customer);
+                int createdCustomerId = await _customerService.CreateCustomer(customer);
                 if (createdCustomerId >= 0)
                 {
-                    // Set the customer ID for the booking
-                    booking.CustomerId = createdCustomerId;
+                    Customers bookingCustomer = new Customers
+                    {
+                        Id = createdCustomerId,
+                        FirstName = customer.FirstName,
+                        LastName = customer.LastName,
+                        Email = customer.Email,
+                        Phone = customer.Phone
+                    };
+
+                    // Assign the Customer object to the booking.Customer property
+                    booking.Customer = bookingCustomer;
 
                     // Call the API to create the booking
-                    var createdBookingId = await _bookingService.CreateBooking(booking);
+                    int createdBookingId = await _bookingService.CreateBooking(booking);
 
                     if (createdBookingId >= 0)
                     {
                         // Redirect to the customer details page or any other appropriate action
-                        return RedirectToAction("Index", "Customer");
+                        return RedirectToAction("Confirm", "Booking", new { id = createdBookingId });
                     }
                     else
                     {
@@ -77,11 +84,7 @@ namespace BowlingMVC.Controllers
 
 
 
-        [HttpGet]
-        public IActionResult Details()
-        {
-            return View();
-        }
+        
 
 
     }

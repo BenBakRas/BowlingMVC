@@ -2,7 +2,7 @@
 {
     public class Customers
     {
-        //public int Id { get; set; }
+        public int Id { get; set; }
         public string? FirstName { get; set; }
         public string? LastName { get; set; }
         public string? Email { get; set; }
@@ -12,8 +12,9 @@
         { 
         }
 
-        public Customers(string firstName, string lastName, string email, string phone, Price price)
+        public Customers(int id, string firstName, string lastName, string email, string phone)
         {
+            Id = id;
             FirstName = firstName;
             LastName = lastName;
             Email = email;

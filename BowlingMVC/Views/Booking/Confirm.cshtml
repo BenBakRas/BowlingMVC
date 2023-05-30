@@ -1,0 +1,25 @@
+﻿@model BowlingMVC.Models.Booking
+
+@{
+    ViewData["Title"] = "Bekræftelse";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-6 mx-auto text-center">
+            <h1 class="display-4">Bekræftelse</h1>
+            <hr class="my-4">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-6 mx-auto text-center">
+            <h3>Booking indeholder:</h3>
+            <p>Navn: @Model.Customer.FirstName @Model.Customer.LastName</p>
+            <p>Email: @Model.Customer.Email</p>
+            <p>Telefonnummer: @Model.Customer.Phone</p>
+            <p>Timeantal: @Model.HoursToPlay</p>
+            <p>Tidspunkt: @Model.StartDateTime</p>
+            <p>Antal spillere: @Model.NoOfPlayers</p>
+        </div>
+    </div>
+</div>

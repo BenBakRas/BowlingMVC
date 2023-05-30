@@ -20,10 +20,10 @@ namespace BowlingMVC.Servicelayer
             return customers;
         }
 
-        public async Task<Customers> GetCustomerById(int customerId)
+        public async Task<Customers> GetCustomerByPhone(string phone)
         {
-            var price = await _apiService.GetAsync<Price>($"customers/{customerId}");
-            return null;
+            var foundCustomer = await _apiService.GetAsynced<Customers>($"customers/{phone}");
+            return foundCustomer;
         }
 
 

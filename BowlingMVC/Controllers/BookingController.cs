@@ -8,10 +8,12 @@ namespace BowlingMVC.Controllers
     public class BookingController : Controller
     {
         private readonly IBookingService _bookingService;
+        private readonly ICustomerService _customerService;
 
-        public BookingController(IBookingService bookingService)
+        public BookingController(IBookingService bookingService, ICustomerService customerService)
         {
             _bookingService = bookingService;
+            _customerService = customerService;
         }
 
         public IActionResult Index()
@@ -19,10 +21,6 @@ namespace BowlingMVC.Controllers
             return View();
         }
 
-        public IActionResult Edit()
-        {
-            return View();
-        }
 
         [HttpGet]
         public IActionResult Create()
@@ -31,30 +29,66 @@ namespace BowlingMVC.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(Booking booking)
+        public async Task<IActionResult> Create(Booking booking, Customers customer)
         {
-
             if (ModelState.IsValid)
             {
-                // Call the API to create the customer
-                var createdBookingId = await _bookingService.CreateBooking(booking);
+                // First we try to find the existing customer
+                Customers foundCustomer = await _customerService.GetCustomerByPhone(customer.Phone);
 
-                if (createdBookingId >= 0)
+                // If customer is found
+                if (foundCustomer != null)
                 {
-                    // Redirect to the customer details page or any other appropriate action
-                    return RedirectToAction("Index", "Customer");
+                    // Then we assign the customer to our booking.
+                    Customers bookingCustomer = new Customers
+                    {
+                        Id = foundCustomer.Id,
+                        FirstName = foundCustomer.FirstName,
+                        LastName = foundCustomer.LastName,
+                        Email = foundCustomer.Email,
+                        Phone = foundCustomer.Phone
+                    };
+
+                    // Assign the Customer object to the booking.Customer property
+                    booking.Customer = bookingCustomer;
+
+                    // Call the API to create the booking
+                    var createdBookingId = await _bookingService.CreateBooking(booking);
+
+                    if (createdBookingId >= 0)
+                    {
+                        // Redirect to confirm page
+                        return RedirectToAction("Confirm", new { id = createdBookingId });
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("", "Failed to create the booking.");
+                    }
                 }
                 else
                 {
-                    ModelState.AddModelError("", "Failed to create the customer.");
+                    ModelState.AddModelError("", "Not able to find the customer.");
                 }
             }
 
             // If the ModelState is not valid or the API call fails, return the create view with the validation errors
             return View(booking);
-
         }
 
+        public async Task<IActionResult> Confirm(int id)
+        {
+            // Retrieve the booking details from the API using the booking ID
+            var booking = await _bookingService.GetBookingById(id);
+
+            if (booking == null)
+            {
+                // If the booking is not found, you can handle the error accordingly, such as displaying an error message or redirecting to an error page.
+                return RedirectToAction("Index", "Error");
+            }
+
+            // Pass the booking details to the confirm view
+            return View(booking);
+        }
 
     }
 }

@@ -35,6 +35,20 @@ namespace BowlingMVC.Servicelayer
             return responseData;
         }
 
+        public async Task<T> GetAsynced<T>(string endpoint)
+        {
+            var response = await _httpClient.GetAsync(endpoint);
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new Exception($"Failed to get data from API, status code: {response.StatusCode}");
+            }
+
+            var responseContent = await response.Content.ReadAsStringAsync();
+            var responseData = JsonConvert.DeserializeObject<T>(responseContent);
+
+            return responseData;
+        }
+
         public async Task<T> PostAsync<T>(string endpoint, object data)
         {
             var requestData = new StringContent(JsonConvert.SerializeObject(data));
@@ -53,6 +67,6 @@ namespace BowlingMVC.Servicelayer
             return responseData;
         }
 
-        // Other methods for PUT, DELETE, etc. can be added as needed.
+        
     }
 }

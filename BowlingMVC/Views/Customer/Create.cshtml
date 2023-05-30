@@ -7,10 +7,11 @@
 <div class="container">
     <div class="row">
         <div class="col-lg-6 mx-auto text-center">
-            <h1 class="display-4">Har du bestilt før?</h1>
+            <h1 class="display-4">Første gang?</h1>
             <hr class="my-4">
         </div>
     </div>
+    Så skal vi lige bruge lidt oplysninger, vi lover det er nemmere næste gang.<br /><br />
 
     <form asp-controller="Customer" asp-action="Create" method="post">
         <legend>Indtast dine oplysninger</legend>
@@ -41,14 +42,14 @@
         </div>
         <div class="form-row">
             <div class="form-group col-md-6">
-                <label for="Booking_StartDateTime">Ønsket dato</label>
+                <label for="Booking.StartDateTime">Ønsket dato og tidspunkt</label>
                 <input type="datetime-local" name="Booking.StartDateTime" class="form-control" id="bookingDateTimeInput" required>
             </div>
             <div class="form-group col-md-6">
                 <label for="NoOfPlayers">Antal spillere</label>
                 <select class="form-control" name="Booking.NoOfPlayers" id="NoOfPlayers" required>
                     <option value="">Vælg antal spillere</option>
-                    @for (int i = 1; i <= 20; i++)
+                    @for (int i = 1; i <= 6; i++)
                     {
                         <option value="@i">@i spillere</option>
                     }
@@ -68,7 +69,7 @@
             </div>
         </div>
         <br />
-        <button type="submit" class="btn btn-warning">Submit</button>
+        <button type="submit" class="btn btn-warning">Bekræft</button>
     </form>
 </div>
 
