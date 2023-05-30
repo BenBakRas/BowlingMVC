@@ -10,6 +10,7 @@ namespace BowlingMVC.Controllers
 {
     public class PriceController : Controller
     {
+        // Instantiate service
         private readonly IPriceService _priceService;
 
         public PriceController(IPriceService priceService)
@@ -18,10 +19,10 @@ namespace BowlingMVC.Controllers
 
         }
         
-        public async Task<IActionResult> Index([FromServices] IApiService apiService)
+        // Index view, showing all prices
+        public async Task<IActionResult> Index()
         {
-            var priceService = new PriceService(apiService);
-            var prices = await priceService.GetAllPrices();
+            var prices = await _priceService.GetAllPrices();
 
             return View(prices);
         }

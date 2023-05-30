@@ -6,9 +6,11 @@ namespace BowlingMVC.Servicelayer
 {
     public class ApiService : IApiService
     {
+        //Instantiate
         private readonly HttpClient _httpClient;
         private readonly string _apiUrl;
 
+        //Constructor taking in API url from appsettings
         public ApiService(IConfiguration configuration)
         {
             _apiUrl = configuration["ServiceUrlToUse"];
@@ -21,6 +23,7 @@ namespace BowlingMVC.Servicelayer
             _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         }
 
+        // Get all - list - from database / API
         public async Task<List<T>> GetAsync<T>(string endpoint)
         {
             var response = await _httpClient.GetAsync(endpoint);
@@ -35,6 +38,7 @@ namespace BowlingMVC.Servicelayer
             return responseData;
         }
 
+        // Get an object from database / API
         public async Task<T> GetAsynced<T>(string endpoint)
         {
             var response = await _httpClient.GetAsync(endpoint);
@@ -49,6 +53,7 @@ namespace BowlingMVC.Servicelayer
             return responseData;
         }
 
+        // Post to database
         public async Task<T> PostAsync<T>(string endpoint, object data)
         {
             var requestData = new StringContent(JsonConvert.SerializeObject(data));

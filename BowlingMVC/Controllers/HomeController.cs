@@ -13,6 +13,7 @@ namespace BowlingMVC.Controllers
             _logger = logger;
         }
 
+        // Index view - frontpage
         public IActionResult Index()
         {
             return View();

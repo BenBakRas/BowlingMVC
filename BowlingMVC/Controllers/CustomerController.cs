@@ -15,6 +15,7 @@ using BowlingMVC.Servicelayer.Interfaces;
 
 namespace BowlingMVC.Controllers
 {
+    //Instantiate services
     public class CustomerController : Controller
     {
         private readonly ICustomerService _customerService;
@@ -26,24 +27,28 @@ namespace BowlingMVC.Controllers
             _bookingService = bookingService;
         }
 
+        //Get index view - "start-view"
         [HttpGet]
         public IActionResult Index()
         {
             return View();
         }
 
+        //Create form-page
         [HttpGet]
         public IActionResult Create()
         {
             return View();
         }
 
+        //Create post method
         [HttpPost]
         public async Task<IActionResult> Create(Customers customer, Booking booking)
         {
+            //Check if all models are validated
             if (ModelState.IsValid)
             {
-
+                // Create new customer - if success assign the customer to the booking
                 int createdCustomerId = await _customerService.CreateCustomer(customer);
                 if (createdCustomerId >= 0)
                 {
@@ -62,6 +67,7 @@ namespace BowlingMVC.Controllers
                     // Call the API to create the booking
                     int createdBookingId = await _bookingService.CreateBooking(booking);
 
+                    //If booking is successfull
                     if (createdBookingId >= 0)
                     {
                         // Redirect to the customer details page or any other appropriate action
@@ -69,11 +75,13 @@ namespace BowlingMVC.Controllers
                     }
                     else
                     {
+                        // Problem creating booking
                         ModelState.AddModelError("", "Failed to create the booking.");
                     }
                 }
                 else
                 {
+                    // Problem creating customer
                     ModelState.AddModelError("", "Failed to create the customer.");
                 }
             }

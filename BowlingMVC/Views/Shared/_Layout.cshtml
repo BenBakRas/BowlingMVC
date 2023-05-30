@@ -1,7 +1,7 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <title>Bowling Alley</title>
+    <title>Bowlinghallen - @ViewBag.Title</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-timepicker/0.5.2/css/bootstrap-timepicker.min.css">
@@ -29,7 +29,7 @@
                             <a class="nav-link" asp-controller="Customer" asp-action="Index">Book en bane</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" asp-controller="Booking" asp-action="Delete">Annullér booking</a>
+                            <a class="nav-link" asp-controller="Booking" asp-action="Cancel">Annullér booking</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" asp-controller="Home" asp-action="Contact">Kontakt os</a>
@@ -44,7 +44,7 @@
     </div>
     <footer class="mt-5 bg-dark text-white">
         <div class="container">
-            <p>&copy; 2023 Our Bowling Alley. All rights reserved.</p>
+            <p>Bowlinghallen. All rights reserved.</p>
         </div>
     </footer>
 
@@ -53,39 +53,5 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-timepicker/0.5.2/js/bootstrap-timepicker.min.js"></script>
     <script src="https://kit.fontawesome.com/ee16ecd062.js" crossorigin="anonymous"></script>
-    @RenderSection("scripts", required: false)
-
-    <script>
-        $(document).ready(function () {
-            // jQuery UI datepicker initialization
-            $("#datePicker").datepicker();
-        });
-
-        $(document).ready(function () {
-            $('#timePicker').timepicker({
-                showMeridian: false,
-                minuteStep: 60,
-                defaultTime: '12:00',
-                icons: {
-                    up: 'fas fa-chevron-up',
-                    down: 'fas fa-chevron-down'
-                },
-                format: 'hh'
-            });
-
-            // Restrict manual editing of the time input
-            $('#timePicker').on('keydown paste', function (e) {
-                e.preventDefault();
-            });
-
-            // Handle time selection changes
-            $('#timePicker').on('changeTime.timepicker', function (e) {
-                var selectedHour = e.time.hours;
-                $(this).val(selectedHour + ':00');
-            });
-        });
-    </script>
-
-
 </body>
 </html>

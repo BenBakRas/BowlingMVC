@@ -5,6 +5,7 @@ using System.Diagnostics;
 
 namespace BowlingMVC.Controllers
 {
+    //Instantiate services
     public class BookingController : Controller
     {
         private readonly IBookingService _bookingService;
@@ -16,18 +17,26 @@ namespace BowlingMVC.Controllers
             _customerService = customerService;
         }
 
+        //Get index view - "start-view"
         public IActionResult Index()
         {
             return View();
         }
 
+        // Cancel view
+        public IActionResult Cancel()
+        {
+            return View();
+        }
 
+        //Create form-page
         [HttpGet]
         public IActionResult Create()
         {
             return View();
         }
 
+        //Create post method
         [HttpPost]
         public async Task<IActionResult> Create(Booking booking, Customers customer)
         {
@@ -39,7 +48,7 @@ namespace BowlingMVC.Controllers
                 // If customer is found
                 if (foundCustomer != null)
                 {
-                    // Then we assign the customer to our booking.
+                    // We build our customer object
                     Customers bookingCustomer = new Customers
                     {
                         Id = foundCustomer.Id,
@@ -62,11 +71,13 @@ namespace BowlingMVC.Controllers
                     }
                     else
                     {
+                        // Problem creating booking
                         ModelState.AddModelError("", "Failed to create the booking.");
                     }
                 }
                 else
                 {
+                    // Problem creating the customer
                     ModelState.AddModelError("", "Not able to find the customer.");
                 }
             }
@@ -82,7 +93,7 @@ namespace BowlingMVC.Controllers
 
             if (booking == null)
             {
-                // If the booking is not found, you can handle the error accordingly, such as displaying an error message or redirecting to an error page.
+                // Redirect to error page if not found
                 return RedirectToAction("Index", "Error");
             }
 

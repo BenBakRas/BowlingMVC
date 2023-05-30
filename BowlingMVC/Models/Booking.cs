@@ -6,7 +6,7 @@
         public DateTime StartDateTime { get; set; }
         public int HoursToPlay { get; set; }
         public int NoOfPlayers { get; set;}
-        //public int CustomerId { get; set; }
+        
         public Customers? Customer;
 
 
