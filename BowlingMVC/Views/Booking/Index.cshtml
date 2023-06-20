@@ -11,13 +11,14 @@
         </div>
     </div>
     Hvis du har booket før, har vi gemt dine informationer, og behøver kun dit telefonnummer.<br /><br />
-    <form asp-controller="Booking" asp-action="Create" method="post">
+    <form asp-controller="Booking" asp-action="Index" method="post">
         <legend>Indtast dine oplysninger</legend>
         <br />
         <div class="form-row">
             <div class="form-group col-md-6">
                 <label for="Phone">Telefonnummer</label>
-                <input type="tel" name="Phone" class="form-control" id="Phone" placeholder="Telefonnumer" required>
+                <input type="tel" name="Phone" class="form-control" id="Phone" value="@Model?.Customer?.Phone" placeholder="Telefonnummer" required>
+                <span asp-validation-for="Customer.Phone" class="text-danger"></span>
             </div>
             <div class="form-group col-md-6">
                 <label for="StartDateTime">Ønsket dato og tidspunkt</label>
@@ -54,6 +55,7 @@
 <script>
     // Get the booking date and time input element
     var bookingDateTimeInput = document.getElementById('bookingDateTimeInput');
+    var dateValidationMessage = document.getElementById('dateValidationMessage');
 
     bookingDateTimeInput.addEventListener('input', function () {
         var date = new Date(this.value);

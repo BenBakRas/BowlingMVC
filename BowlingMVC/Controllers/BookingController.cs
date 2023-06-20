@@ -17,11 +17,6 @@ namespace BowlingMVC.Controllers
             _customerService = customerService;
         }
 
-        //Get index view - "start-view"
-        public IActionResult Index()
-        {
-            return View();
-        }
 
         // Cancel view
         public IActionResult Cancel()
@@ -31,14 +26,14 @@ namespace BowlingMVC.Controllers
 
         //Create form-page
         [HttpGet]
-        public IActionResult Create()
+        public IActionResult Index()
         {
             return View();
         }
 
         //Create post method
         [HttpPost]
-        public async Task<IActionResult> Create(Booking booking, Customers customer)
+        public async Task<IActionResult> Index(Booking booking, Customers customer)
         {
             if (ModelState.IsValid)
             {
@@ -83,6 +78,7 @@ namespace BowlingMVC.Controllers
             }
 
             // If the ModelState is not valid or the API call fails, return the create view with the validation errors
+            booking.Customer = customer;
             return View(booking);
         }
 

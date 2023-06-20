@@ -19,24 +19,24 @@
         <div class="form-row">
             <div class="form-group col-md-6">
                 <label for="FirstName">Fornavn</label>
-                <input type="text" name="FirstName" class="form-control" id="FirstName" placeholder="Fornavn" required>
+                <input type="text" name="FirstName" class="form-control" id="FirstName" value="@Model?.FirstName" placeholder="Fornavn" required>
                 <span asp-validation-for="FirstName" class="text-danger"></span>
             </div>
             <div class="form-group col-md-6">
                 <label for="LastName">Efternavn</label>
-                <input type="text" name="LastName" class="form-control" id="LastName" placeholder="Efternavn" required>
+                <input type="text" name="LastName" class="form-control" id="LastName" value="@Model?.LastName" placeholder="Efternavn" required>
                 <span asp-validation-for="LastName" class="text-danger"></span>
             </div>
         </div>
         <div class="form-row">
             <div class="form-group col-md-6">
                 <label for="Email">Email</label>
-                <input type="email" name="Email" class="form-control" id="Email" placeholder="Email" required>
+                <input type="email" name="Email" class="form-control" id="Email" value="@Model?.Email" placeholder="Email" required>
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>
             <div class="form-group col-md-6">
                 <label for="Phone">Telefonnummer</label>
-                <input type="tel" name="Phone" class="form-control" id="Phone" placeholder="Telefonnummer" required>
+                <input type="tel" name="Phone" class="form-control" id="Phone" value="@Model?.Phone" placeholder="Telefonnummer" required>
                 <span asp-validation-for="Phone" class="text-danger"></span>
             </div>
         </div>
@@ -63,7 +63,7 @@
                     <option value="">Vælg antal timer</option>
                     @for (int i = 1; i <= 4; i++)
                     {
-                        <option value="@i">@i timer</option>
+                        <option value="@i">@i spillere</option>
                     }
                 </select>
             </div>
